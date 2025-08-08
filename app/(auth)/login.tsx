@@ -1,25 +1,45 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Alert,
-  Pressable,
-} from 'react-native';
 import { Button, Input } from '@/components/ui';
 import { useAuthStore } from '@/stores';
+import { router } from 'expo-router';
+import React, { useState } from 'react';
+import {
+  Alert,
+  Keyboard,
+  View
+} from 'react-native';
 
 interface LoginScreenProps {
   onSwitchToSignup: () => void;
 }
 
 export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
-  const { signIn, isLoading } = useAuthStore();
+  const { signIn, isLoading, error, clearError } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{email?: string; password?: string}>({});
+
+  // Clear auth error when user starts typing
+  React.useEffect(() => {
+    // if (error) {
+    //   clearError();
+    // }
+  }, [email, password, error, clearError]);
+
+  // Show alert when there's an error
+  React.useEffect(() => {
+    if (error) {
+      Alert.alert(
+        'Login Error',
+        error,
+        [
+          {
+            text: 'OK',
+            onPress: clearError,
+          },
+        ]
+      );
+    }
+  }, [error, clearError]);
 
   const validateForm = () => {
     const newErrors: {email?: string; password?: string} = {};
@@ -27,7 +47,7 @@ export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
     if (!email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!password) {
@@ -41,36 +61,20 @@ export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
   };
 
   const handleSignIn = async () => {
+    Keyboard.dismiss();
     if (!validateForm()) return;
 
     try {
       await signIn(email, password);
+      // Navigate to main app after successful login
+      router.replace('/(tabs)');
     } catch (error: any) {
-      Alert.alert('Login Failed', error.message || 'Something went wrong');
+      // Error is already handled by the store and displayed via error state
+      // console.error('Login failed:', error);
     }
   };
-
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-gray-50"
-    >
-      <ScrollView 
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="flex-1 justify-center px-6 py-12">
-          {/* Header */}
-          <View className="mb-8">
-            <Text className="text-3xl font-bold text-gray-900 text-center mb-2">
-              Welcome Back
-            </Text>
-            <Text className="text-gray-600 text-center">
-              Sign in to your account
-            </Text>
-          </View>
-
-          {/* Form */}
+        <View>
           <View className="space-y-4">
             <Input
               label="Email"
@@ -81,6 +85,7 @@ export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
               autoCapitalize="none"
               autoComplete="email"
               error={errors.email}
+              size='lg'
             />
 
             <Input
@@ -91,30 +96,18 @@ export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
               secureTextEntry
               autoComplete="current-password"
               error={errors.password}
+              size='lg'
             />
 
             <Button
               onPress={handleSignIn}
               isLoading={isLoading}
               className="mt-6"
+              disabled={isLoading}
             >
               Sign In
             </Button>
           </View>
-
-          {/* Footer */}
-          <View className="mt-8">
-            <Pressable onPress={onSwitchToSignup}>
-              <Text className="text-center text-gray-600">
-                Don't have an account?{' '}
-                <Text className="text-blue-600 font-medium">
-                  Sign up
-                </Text>
-              </Text>
-            </Pressable>
-          </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
   );
 }

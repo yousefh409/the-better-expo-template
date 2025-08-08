@@ -21,14 +21,14 @@ interface InputProps extends TextInputProps {
 
 const inputVariants = {
   default: 'bg-white focus:border-primary-500 focus:bg-primary-50',
-  outline: 'border-2 border-primary-200 bg-transparent focus:border-primary-600 focus:bg-primary-25',
+  outline: 'border-2 border-primary-200 bg-transparent focus:border-primary-600 focus:bg-primary-500',
   filled: 'border-0 bg-neutral-100 focus:bg-primary-50',
 };
 
 const inputSizes = {
   sm: 'px-3 py-2 text-sm rounded-sm',
   md: 'px-3 py-3 text-base rounded-sm',
-  lg: 'px-4 py-4 text-lg rounded-sm',
+  lg: 'px-4 py-1 h-[50px] text-xl rounded-sm',
 };
 
 export function Input({
@@ -50,7 +50,6 @@ export function Input({
       )}
       <TextInput
         className={cn(
-          // 'text-neutral-900',
           inputVariants[variant],
           inputSizes[size],
           error && 'border-error-500 bg-error-50 focus:border-error-600 focus:bg-error-100',

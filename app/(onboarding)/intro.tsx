@@ -30,7 +30,7 @@ const App = () => {
                 <Button
                     variant="outline"
                     size="lg"
-                    onPress={() => console.log('Sign In Pressed')}
+                    onPress={() => router.push('/login')}
                 >
                     Sign In
                 </Button>

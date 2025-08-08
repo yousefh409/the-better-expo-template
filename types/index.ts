@@ -7,9 +7,30 @@ export interface User {
   id: string;
   email: string;
   displayName?: string;
-  photoURL?: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+// User Profile types for Firestore
+export interface UserProfile {
+  id: string;
+  email: string;
+  name: string;
+  displayName?: string;
+  questionnaire: QuestionnaireData;
+  onboardingCompleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Questionnaire data type
+export interface QuestionnaireData {
+  interests?: string[];
+  experience_level?: string;
+  goals?: string[];
+  preferred_style?: string;
+  bio?: string;
+  [key: string]: string | string[] | undefined;
 }
 
 // API Response types
@@ -81,4 +102,10 @@ export interface AsyncState<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
+}
+
+// Authentication error types
+export interface AuthError {
+  code: string;
+  message: string;
 }

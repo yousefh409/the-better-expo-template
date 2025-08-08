@@ -2,10 +2,10 @@ import { router } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
-    SlideInRight,
-    SlideOutLeft,
-    useSharedValue,
-    withTiming
+  SlideInRight,
+  SlideOutLeft,
+  useSharedValue,
+  withTiming
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -52,13 +52,8 @@ export default function Questionnaire() {
     if (currentQuestionIndex === questions.length - 1) {
       // Complete questionnaire and navigate to signup
       completeQuestionnaire();
-      // Pass questionnaire data to signup screen
-      router.push({
-        pathname: '/(onboarding)/(auth)/signup',
-        params: {
-          questionnaireData: JSON.stringify(answers),
-        },
-      });
+      // Navigate to signup screen - questionnaire data will be accessed directly from store
+      router.push('/(auth)/signup');
     } else {
       setTimeout(() => {
         nextQuestion();

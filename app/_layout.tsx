@@ -33,15 +33,20 @@ export default function RootLayout() {
 function RootNavigator() {
 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);  
+  console.log('isAuthenticated:', isAuthenticated);
+  
   return (
-    <Stack   screenOptions={{ headerShown: false }}
->
+    <Stack screenOptions={{ headerShown: false }}>
+      {/* Protected routes for authenticated users */}
       <Stack.Protected guard={isAuthenticated}>
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
 
+      {/* Protected routes for non-authenticated users */}
       <Stack.Protected guard={!isAuthenticated}>
         <Stack.Screen name="(onboarding)" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="+not-found" />
       </Stack.Protected>
     </Stack>
   );

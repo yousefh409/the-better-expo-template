@@ -6,7 +6,7 @@ interface TextProps extends RNTextProps {
   variant?: 'body' | 'caption' | 'footnote' | 'label' | 'small';
   weight?: 'normal' | 'medium' | 'semibold' | 'bold';
   size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl';
-  color?: 'primary' | 'secondary' | 'muted' | 'accent' | 'destructive';
+  color?: 'primary' | 'secondary' | 'muted' | 'accent' | 'destructive' | 'error';
   className?: string;
   children: React.ReactNode;
 }
@@ -32,6 +32,8 @@ const textSizes = {
   base: 'text-base',
   lg: 'text-lg',
   xl: 'text-xl',
+  '2xl': 'text-2xl',
+  '3xl': 'text-3xl',
 };
 
 

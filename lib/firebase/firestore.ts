@@ -1,19 +1,20 @@
+import { QuestionnaireData, UserProfile } from '@/types';
 import {
-    addDoc,
-    collection,
-    deleteDoc,
-    doc,
-    DocumentData,
-    getDoc,
-    getDocs,
-    limit,
-    orderBy,
-    query,
-    QueryConstraint,
-    setDoc,
-    Timestamp,
-    updateDoc,
-    where,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  QueryConstraint,
+  setDoc,
+  Timestamp,
+  updateDoc,
+  where,
 } from 'firebase/firestore';
 import { db } from './config';
 
@@ -87,6 +88,84 @@ export class FirestoreService {
   static async deleteDocument(collectionName: string, documentId: string) {
     const docRef = doc(db, collectionName, documentId);
     await deleteDoc(docRef);
+  }
+
+  /**
+   * Create a user profile in Firestore
+   */
+  static async createUserProfile(
+    uid: string, 
+    userData: {
+      email: string;
+      name: string;
+      displayName?: string;
+      questionnaire?: QuestionnaireData;
+    }
+  ): Promise<void> {
+    const userProfile: Omit<UserProfile, 'id'> = {
+      email: userData.email,
+      name: userData.name,
+      displayName: userData.displayName || userData.name,
+      questionnaire: userData.questionnaire || {},
+      onboardingCompleted: !!userData.questionnaire,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    await setDoc(doc(db, 'users', uid), {
+      ...userProfile,
+      createdAt: Timestamp.fromDate(userProfile.createdAt),
+      updatedAt: Timestamp.fromDate(userProfile.updatedAt),
+    });
+  }
+
+  /**
+   * Get a user profile by UID
+   */
+  static async getUserProfile(uid: string): Promise<UserProfile | null> {
+    const docRef = doc(db, 'users', uid);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        ...data,
+        createdAt: data.createdAt?.toDate() || new Date(),
+        updatedAt: data.updatedAt?.toDate() || new Date(),
+      } as UserProfile;
+    }
+    
+    return null;
+  }
+
+  /**
+   * Update a user profile
+   */
+  static async updateUserProfile(
+    uid: string, 
+    updates: Partial<Omit<UserProfile, 'id' | 'createdAt'>>
+  ): Promise<void> {
+    const docRef = doc(db, 'users', uid);
+    await updateDoc(docRef, {
+      ...updates,
+      updatedAt: Timestamp.now(),
+    });
+  }
+
+  /**
+   * Update user questionnaire data
+   */
+  static async updateUserQuestionnaire(
+    uid: string,
+    questionnaireData: QuestionnaireData
+  ): Promise<void> {
+    const docRef = doc(db, 'users', uid);
+    await updateDoc(docRef, {
+      questionnaire: questionnaireData,
+      onboardingCompleted: true,
+      updatedAt: Timestamp.now(),
+    });
   }
 
   /**

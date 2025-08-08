@@ -63,7 +63,7 @@ export function CardHeader({ children, className, ...props }: CardHeaderProps) {
 
 export function CardContent({ children, className, ...props }: CardContentProps) {
   return (
-    <View className={cn('p-4 pt-0', className)} {...props}>
+    <View className={cn('p-4 pt-0 text-black', className)} {...props}>
       {children}
     </View>
   );

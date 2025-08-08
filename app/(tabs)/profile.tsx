@@ -1,7 +1,7 @@
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
+import { Button, H1, Text } from '@/components/ui';
 import { useAuthStore } from '@/stores';
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, View } from 'react-native';
 
 export default function ProfileScreen() {
   const { user, signOut, isLoading } = useAuthStore();
@@ -31,62 +31,36 @@ export default function ProfileScreen() {
   };
 
   return (
-    <View className="flex-1 bg-gray-50 px-6 pt-16">
-      <Text className="text-2xl font-bold text-gray-900 mb-6">
+    <View className="flex-1 px-6 pt-16">
+      <H1>
         Profile
-      </Text>
+      </H1>
 
       {/* User Info Card */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>Account Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <View className="space-y-3">
-            <View>
-              <Text className="text-sm font-medium text-gray-500 mb-1">
-                Email
+      <View className="mb-6">
+            <Text size='xl'>
+              Email: {user?.email || 'No email'}
               </Text>
-              <Text className="text-base text-gray-900">
-                {user?.email || 'No email'}
-              </Text>
-            </View>
             
-            <View>
-              <Text className="text-sm font-medium text-gray-500 mb-1">
-                User ID
+            <Text size='xl'>
+                User ID: {user?.uid || 'No ID'}
               </Text>
-              <Text className="text-base text-gray-900 font-mono">
-                {user?.uid || 'No ID'}
-              </Text>
-            </View>
 
             {user?.metadata?.creationTime && (
-              <View>
-                <Text className="text-sm font-medium text-gray-500 mb-1">
-                  Member Since
+            <Text size='xl'>
+                  Member Since: {new Date(user.metadata.creationTime).toLocaleDateString()}
                 </Text>
-                <Text className="text-base text-gray-900">
-                  {new Date(user.metadata.creationTime).toLocaleDateString()}
-                </Text>
-              </View>
             )}
-          </View>
-        </CardContent>
-      </Card>
+    </View>
 
       {/* Sign Out Section */}
-      <Card>
-        <CardContent className="pt-4">
-          <Button
-            variant="destructive"
-            onPress={handleSignOut}
-            isLoading={isLoading}
-          >
-            Sign Out
-          </Button>
-        </CardContent>
-      </Card>
+      <Button
+        variant="destructive"
+        onPress={handleSignOut}
+        isLoading={isLoading}
+      >
+        Sign Out
+      </Button>
     </View>
   );
 }
