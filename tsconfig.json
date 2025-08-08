@@ -5,13 +5,33 @@
     "paths": {
       "@/*": [
         "./*"
-      ]
+      ],
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/stores/*": [
+        "./stores/*"
+      ],
+      "@/lib/*": [
+        "./lib/*"
+      ],
+      "@/services/*": [
+        "./services/*"
+      ],
+      "@/utils/*": [
+        "./utils/*"
+      ],
+      "@/utils": [
+        "./utils/index"
+      ],
+       "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
   ]
 }

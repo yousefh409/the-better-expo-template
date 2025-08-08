@@ -1,29 +1,48 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import 'react-native-reanimated';
+import '../global.css';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { SplashScreenController } from '@/splash';
+import { useAuthStore } from '@/stores';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const { initializeAuth } = useAuthStore();
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+  // Initialize auth state listener
+  useEffect(() => {
+    const unsubscribe = initializeAuth();
+    return unsubscribe;
+  }, [initializeAuth]); 
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+    {/* <ThemeProvider value={DefaultTheme}> */}
+    <SplashScreenController />
+      <RootNavigator />
+      {/* <StatusBar style="auto" />   */}
     </ThemeProvider>
+  );
+}
+
+
+// Separate this into a new component so it can access the SessionProvider context later
+function RootNavigator() {
+
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);  
+  return (
+    <Stack   screenOptions={{ headerShown: false }}
+>
+      <Stack.Protected guard={isAuthenticated}>
+        <Stack.Screen name="(tabs)" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!isAuthenticated}>
+        <Stack.Screen name="(onboarding)" />
+      </Stack.Protected>
+    </Stack>
   );
 }
