@@ -91,7 +91,7 @@ export default function SignupScreen() {
       router.replace('/(tabs)');
     } catch (error: any) {
       // Error is already handled by the store and displayed via error state
-      console.error('Signup failed:', error);
+      // console.error('Signup failed:', error);
     }
   };
 

@@ -2,8 +2,8 @@ import { Question } from '@/stores/questionnaireStore';
 import React from 'react';
 import { TextInput, View } from 'react-native';
 import Animated, {
-    FadeInUp,
-    FadeOutDown
+  FadeInUp,
+  FadeOutDown
 } from 'react-native-reanimated';
 import { H1 } from '../ui';
 import { OptionButton } from './OptionButton';

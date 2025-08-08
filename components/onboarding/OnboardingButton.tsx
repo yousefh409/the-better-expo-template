@@ -1,13 +1,14 @@
+import { themeColors } from '@/constants/theme-colors';
 import { router } from 'expo-router';
 import React, { useCallback } from 'react';
 import {
-    Pressable,
-    StyleSheet
+  Pressable,
+  StyleSheet
 } from 'react-native';
 import Animated, {
-    useAnimatedStyle,
-    withSpring,
-    withTiming,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 
 type Props = {
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderRadius: 100,
-    backgroundColor: '#B91C1C', // Updated to use lighter primary-600 maroon color
+    backgroundColor: themeColors.primary[600], // Use primary color from centralized theme
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',

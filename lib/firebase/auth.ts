@@ -71,8 +71,6 @@ export class AuthService {
       return await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
       const authError = error as AuthError;
-      console.log(authError)
-      console.log("fefefeffe")
       throw new Error(getAuthErrorMessage(authError.code));
     }
   }

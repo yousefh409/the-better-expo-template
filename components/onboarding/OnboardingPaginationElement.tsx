@@ -1,12 +1,12 @@
+import { colors } from '@/utils';
 import React, { useCallback } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, {
-    Extrapolate,
-    interpolate,
-    interpolateColor,
-    useAnimatedStyle,
+  Extrapolate,
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
-
 type Props = {
   length: number;
   x: Animated.SharedValue<number>;
@@ -24,7 +24,7 @@ const OnboardingPaginationElement = ({ length, x }: Props) => {
           index * SCREEN_WIDTH,
           (index + 1) * SCREEN_WIDTH,
         ],
-        [35, 16, 35],
+        [16, 35, 16],
         Extrapolate.CLAMP
       );
 
@@ -35,7 +35,7 @@ const OnboardingPaginationElement = ({ length, x }: Props) => {
           index * SCREEN_WIDTH,
           (index + 1) * SCREEN_WIDTH,
         ],
-        ['#D0D0D0', '#B91C1C', '#D0D0D0']
+        ['#D0D0D0', colors.primary[700], '#D0D0D0']
       );
 
       return {

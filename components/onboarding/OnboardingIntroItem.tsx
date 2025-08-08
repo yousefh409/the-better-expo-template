@@ -1,15 +1,15 @@
 import LottieView from 'lottie-react-native';
 import React from 'react';
 import {
-    ImageURISource,
-    StyleSheet,
-    View,
-    useWindowDimensions,
+  ImageURISource,
+  StyleSheet,
+  View,
+  useWindowDimensions,
 } from 'react-native';
 import Animated, {
-    Extrapolate,
-    interpolate,
-    useAnimatedStyle,
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
 import { Text } from '../ui';
 
@@ -106,5 +106,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 41,
     fontSize: 34,
+    paddingHorizontal: 20
   },
 });

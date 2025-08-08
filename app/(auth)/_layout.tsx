@@ -16,7 +16,7 @@ export default function AuthStack() {
   return (
       <KeyboardAvoidingView 
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            className="flex-1 bg-gray-50"
+            className="flex-1"
           >
             <ScrollView 
               contentContainerStyle={{ flexGrow: 1 }}

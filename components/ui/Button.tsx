@@ -20,10 +20,10 @@
 import { cn } from '@/utils';
 import React from 'react';
 import {
-    ActivityIndicator,
-    Text,
-    TouchableOpacity,
-    TouchableOpacityProps,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
 } from 'react-native';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
@@ -40,7 +40,7 @@ interface ButtonProps extends TouchableOpacityProps {
 const buttonVariants = {
   primary: 'bg-primary-600 active:bg-primary-700',
   secondary: 'bg-secondary-500 active:bg-secondary-600',
-  outline: 'border-2 border-primary-600 bg-transparent active:bg-primary-50',
+  outline: 'border-2 border-primary-600 bg-transparent ',
   ghost: 'bg-transparent active:bg-primary-50',
   destructive: 'bg-error-600 active:bg-error-700',
 };

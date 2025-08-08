@@ -1,17 +1,15 @@
 import { router } from 'expo-router';
 import React from 'react';
-import { View } from 'react-native';
-import Animated, {
-  SlideInRight,
-  SlideOutLeft,
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { QuestionScreen } from '@/components/questionnaire/QuestionScreen';
 import { Button } from '@/components/ui/Button';
 import { questions, useQuestionnaireStore } from '@/stores/questionnaireStore';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Questionnaire() {
   const {
@@ -83,35 +81,35 @@ export default function Questionnaire() {
   }, []);
 
   return (
-    <SafeAreaView className="flex-1">      
-        {/* <View className="px-6">
-          <ProgressBar 
-            progress={progress} 
-            totalSteps={questions.length} 
-          />
-        </View> */}
-
-        <Animated.View 
+    <SafeAreaView>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps='always'
+          className='flex flex-col h-full'
+        >
+        <View 
           className="flex-1"
-          key={currentQuestionIndex} // Force re-render for animations
-          entering={SlideInRight.duration(300)}
-          exiting={SlideOutLeft.duration(200)}
+          // key={currentQuestionIndex} // Force re-render for animations
+          // entering={SlideInRight.duration(300)}
+          // exiting={SlideOutLeft.duration(200)}
         >
           <QuestionScreen
             question={currentQuestion}
             answer={currentAnswer}
             onAnswerChange={handleAnswerChange}
           />
-        </Animated.View>
+        </View>
 
         {/* Navigation Buttons */}
-        <View className="flex flex-row justify-between items-center py-6 px-6">
+        <View className="mt-auto flex flex-row justify-between items-center py-6 px-6">
           <Button
             variant="outline"
             size="lg"
             onPress={handlePrevious}
             disabled={currentQuestionIndex === 0}
-            className="mr-3 flex-2"
+            className="mr-3 flex-4"
           >
             Previous
           </Button>
@@ -126,6 +124,8 @@ export default function Questionnaire() {
             {currentQuestionIndex === questions.length - 1 ? 'Complete' : 'Next'}
           </Button>
         </View>
-    </SafeAreaView>
+      </ScrollView>
+    </KeyboardAvoidingView>
+      </SafeAreaView>
   );
 }

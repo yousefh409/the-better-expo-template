@@ -69,7 +69,6 @@ export const useAuthStore = create<AuthState>()(
       },
 
       clearError: () => {
-        console.log('Clearing auth error');
         set({ error: null });
       },
 
@@ -78,7 +77,7 @@ export const useAuthStore = create<AuthState>()(
           const profile = await FirestoreService.getUserProfile(uid);
           set({ userProfile: profile });
         } catch (error) {
-          console.error('Failed to load user profile:', error);
+          // console.error('Failed to load user profile:', error);
           // Don't set error state for profile loading failures
         }
       },

@@ -33,7 +33,6 @@ export default function RootLayout() {
 function RootNavigator() {
 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);  
-  console.log('isAuthenticated:', isAuthenticated);
   
   return (
     <Stack screenOptions={{ headerShown: false }}>

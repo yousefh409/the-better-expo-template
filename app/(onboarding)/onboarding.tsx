@@ -3,16 +3,16 @@ import OnboardingIntroItem from '@/components/onboarding/OnboardingIntroItem';
 import OnboardingPaginationElement from '@/components/onboarding/OnboardingPaginationElement';
 import { useCallback } from 'react';
 import {
-    ImageURISource,
-    SafeAreaView,
-    StyleSheet,
-    View,
-    ViewToken
+  ImageURISource,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  ViewToken
 } from 'react-native';
 import Animated, {
-    useAnimatedRef,
-    useAnimatedScrollHandler,
-    useSharedValue,
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useSharedValue,
 } from 'react-native-reanimated';
 
 
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomContainer: {
+    marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -1,12 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
-    interpolate,
-    useAnimatedStyle,
-    useSharedValue,
-    withSpring,
-    withTiming
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming
 } from 'react-native-reanimated';
+import { colors } from '../../utils/colors';
 
 type CheckboxVariant = 'primary' | 'secondary' | 'success' | 'error';
 
@@ -17,10 +18,10 @@ interface CheckboxProps {
 }
 
 const checkboxColors = {
-  primary: { checked: '#550000', border: '#550000' },
-  secondary: { checked: '#F59E0B', border: '#F59E0B' },
-  success: { checked: '#059669', border: '#059669' },
-  error: { checked: '#DC2626', border: '#DC2626' },
+  primary: { checked: colors.primary, border: colors.primary },
+  secondary: { checked: colors.secondary, border: colors.secondary },
+  success: { checked: colors.success, border: colors.success },
+  error: { checked: colors.error, border: colors.error },
 };
 
 export const Checkbox: React.FC<CheckboxProps> = ({
@@ -51,7 +52,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     return {
       transform: [{ scale: scale.value }],
       backgroundColor: backgroundColor > 0.5 ? colors.checked : 'transparent',
-      borderColor: backgroundColor > 0.5 ? colors.border : '#9CA3AF',
+      borderColor: backgroundColor > 0.5 ? "white" : '#9CA3AF',
     };
   });
 
