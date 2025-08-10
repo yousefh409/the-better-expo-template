@@ -43,17 +43,6 @@ utils/                # Helper functions
 <View style={{flex: 1, backgroundColor: 'white', padding: 16}}>
 ```
 
-### Use theme colors from constants:
-```tsx
-import { useThemeColor } from '@/hooks/useThemeColor';
-
-// ✅ CORRECT
-const backgroundColor = useThemeColor('background');
-<View style={{ backgroundColor }}>
-
-// ❌ WRONG - no hardcoded colors
-<View className="bg-blue-500">
-```
 
 ### Responsive design patterns:
 ```tsx
@@ -159,13 +148,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 />
 ```
 
-
-### Use React.memo for pure components:
-```tsx
-export const PureComponent = React.memo(({ data }) => {
-  return <View>{/* render */}</View>;
-});
-```
 
 ## 🧪 Error Handling
 
