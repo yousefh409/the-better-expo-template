@@ -64,33 +64,6 @@ const { width } = useWindowDimensions();
 style={{ width: width * 0.8 }}
 ```
 
-## 🧩 Component Patterns
-
-
-### Component file structure:
-```tsx
-// 1. Imports (grouped: React, React Native, third-party, local)
-import { forwardRef } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { cn } from '@/utils';
-
-// 2. Interface (always export)
-export interface ButtonProps extends TouchableOpacityProps {
-  variant?: 'primary' | 'secondary';
-  size?: 'sm' | 'md' | 'lg';
-}
-
-// 3. Component with forwardRef
-export const Button = forwardRef<TouchableOpacity, ButtonProps>(
-  (props, ref) => {
-    // Component logic
-  }
-);
-
-// 4. Display name
-Button.displayName = 'Button';
-```
-
 ## 🧭 Navigation with Expo Router
 
 ### Screen components (in app/ directory):
