@@ -8,7 +8,7 @@ A modern, production-ready React Native mobile application template built with E
   
 | Questionnaire Flow | Travel Illustration | Welcome Screen | Home Dashboard |
 |:--:|:--:|:--:|:--:|
-| ![Goals Screen](.github/images/goals-screen.png) | ![Travel Screen](.github/images/onboarding-travel.png) | ![Welcome Screen](.github/images/welcome-screen.png) | ![Home Screen](.github/images/home-screen.png) |
+| ![Goals Screen](.github/images/43A39B86-ED57-49B3-AB9F-82DB06FA6B0A.PNG) | ![Onboarding Screen](.github/images/7A82C4CA-C5CF-4690-931D-6CA57C6F9F52.PNG) | ![Welcome Screen](.github/images/917F2586-27AF-42AA-86C2-470EACE20CC9.PNG) | ![Home Screen](.github/images/55D7C35E-9511-45D5-97CC-ACEC5C8C1491.PNG) |
 | Interactive goal selection | Beautiful world animation | Onboarding with Lottie | Main app dashboard |
 
 </div>
