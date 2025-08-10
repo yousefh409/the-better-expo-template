@@ -38,9 +38,9 @@ interface ButtonProps extends TouchableOpacityProps {
 }
 
 const buttonVariants = {
-  primary: 'bg-primary-600 active:bg-primary-700',
+  primary: 'bg-primary-500 active:bg-primary-700',
   secondary: 'bg-secondary-500 active:bg-secondary-600',
-  outline: 'border-2 border-primary-600 bg-transparent ',
+  outline: 'border-2 border-primary-500 bg-transparent ',
   ghost: 'bg-transparent active:bg-primary-50',
   destructive: 'bg-error-600 active:bg-error-700',
 };
@@ -48,8 +48,8 @@ const buttonVariants = {
 const buttonTextVariants = {
   primary: 'text-white',
   secondary: 'text-white',
-  outline: 'text-primary-600',
-  ghost: 'text-primary-600',
+  outline: 'text-primary-500',
+  ghost: 'text-primary-500',
   destructive: 'text-white',
 };
 

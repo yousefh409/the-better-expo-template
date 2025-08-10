@@ -35,7 +35,7 @@ const OnboardingPaginationElement = ({ length, x }: Props) => {
           index * SCREEN_WIDTH,
           (index + 1) * SCREEN_WIDTH,
         ],
-        ['#D0D0D0', colors.primary[700], '#D0D0D0']
+        ['#D0D0D0', colors.primary[500], '#D0D0D0']
       );
 
       return {

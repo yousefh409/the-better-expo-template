@@ -24,7 +24,7 @@ export const OptionButton: React.FC<OptionButtonProps> = ({
     >
       <View
         className={`flex flex-row ${
-            isSelected ? 'bg-primary-300 dark:bg-primary-800' : 'dark:bg-neutral-800'
+            isSelected ? 'bg-primary-300 dark:bg-primary-500' : 'dark:bg-neutral-800'
           } items-center p-4 rounded-xl border-2 w-full mt-1`}
       >
         <Text className="text-4xl mr-4">{option.emoji}</Text>

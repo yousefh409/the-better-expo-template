@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderRadius: 100,
-    backgroundColor: themeColors.primary[600], // Use primary color from centralized theme
+    backgroundColor: themeColors.primary[500], // Use primary color from centralized theme
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
