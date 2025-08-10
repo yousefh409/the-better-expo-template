@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "rooting-mobile",
-    "slug": "rooting-mobile",
+    "name": "My Mobile App",
+    "slug": "my-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "rootingmobile",
+    "scheme": "mymobileapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.werooting.rootingmobile",
+      "bundleIdentifier": "com.yourcompany.mymobileapp",
       "usesAppleSignIn": true
     },
     "android": {

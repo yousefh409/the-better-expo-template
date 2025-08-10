@@ -1,5 +1,6 @@
 import { H1, H3, Text } from '@/components/ui';
 import { Button } from '@/components/ui/Button';
+import { PLACEHOLDER_TEXTS } from '@/utils/appConfig';
 import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import React from 'react';
@@ -17,8 +18,8 @@ const App = () => {
                     source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} // Replace with your actual logo URI
                     className="w-32 h-32 rounded-full mb-6"
                 /> */}
-               <H3 className="mb-2 mt-[100px]">Welcome to My App!</H3>
-                <H1 className="text-center">Your catchy phrase goes here.</H1>
+               <H3 className="mb-2 mt-[100px]">{PLACEHOLDER_TEXTS.welcomeMessage}</H3>
+                <H1 className="text-center">{PLACEHOLDER_TEXTS.tagline}</H1>
                 <LottieView
                         autoPlay
                         style={{
@@ -31,7 +32,7 @@ const App = () => {
             </View>
             <View className="px-5 pb-10">
                 <Text className="text-center mb-3">
-                        quick lets start, last one there is a rotten egg!
+                    {PLACEHOLDER_TEXTS.getStartedText}
                 </Text>
                 <Button
                     variant="primary"

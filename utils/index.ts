@@ -6,4 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
 }
 
+export * from './appConfig';
 export * from './colors';
+
