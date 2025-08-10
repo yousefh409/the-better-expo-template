@@ -1,5 +1,5 @@
 import { AuthService, FirestoreService } from '@/lib/firebase';
-import { QuestionnaireData, UserProfile } from '@/types';
+import { UserProfile } from '@/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User } from 'firebase/auth';
 import { create } from 'zustand';
@@ -24,8 +24,10 @@ interface AuthState {
     [key: string]: any;
   }) => Promise<void>;
   signOut: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
+  providerSignIn: (provider: "apple" | "google") => Promise<void>;
+  providerSignUp: (provider: "apple" | "google", profileData: any) => Promise<void>;
   loadUserProfile: (uid: string) => Promise<void>;
-  updateQuestionnaire: (questionnaireData: QuestionnaireData) => Promise<void>;
   initializeAuth: () => void;
   clearError: () => void;
 }
@@ -77,7 +79,7 @@ export const useAuthStore = create<AuthState>()(
           const profile = await FirestoreService.getUserProfile(uid);
           set({ userProfile: profile });
         } catch (error) {
-          // console.error('Failed to load user profile:', error);
+          console.error('Failed to load user profile:', error);
           // Don't set error state for profile loading failures
         }
       },
@@ -105,21 +107,8 @@ export const useAuthStore = create<AuthState>()(
           );
           
           // Create user profile in Firestore
-          if (userCredential.user && profileData) {
-            try {
-              await FirestoreService.createUserProfile(userCredential.user.uid, {
-                email,
-                name: profileData.name,
-                displayName: profileData.name,
-                questionnaire: profileData.questionnaire || {},
-              });
-            } catch (profileError) {
-              console.error('Failed to create user profile:', profileError);
-              // Don't throw here as user account was created successfully
-              // User can complete profile later
-            }
-          }
-          
+          await AuthService.createFirestoreUserProfile(userCredential, profileData);
+
           get().setUser(userCredential.user);
         } catch (error: any) {
           set({ isLoading: false, error: error.message });
@@ -127,21 +116,42 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      updateQuestionnaire: async (questionnaireData) => {
-        const { user } = get();
-        if (!user) {
-          throw new Error('User must be authenticated to update questionnaire');
-        }
-
+      providerSignIn: async (provider) => {
         try {
           set({ isLoading: true, error: null });
           
-          await FirestoreService.updateUserQuestionnaire(user.uid, questionnaireData);
+          let userCredential;
+          if (provider === "google") {
+            userCredential = await AuthService.googleSignIn();
+          } else if (provider === "apple") {
+            userCredential = await AuthService.appleSignIn();
+          }
+
+          get().setUser(userCredential.user);
           
-          // Reload user profile to get updated data
-          await get().loadUserProfile(user.uid);
+        } catch (error: any) {
+          set({ isLoading: false, error: error.message });
+          throw error;
+        }
+      },
+
+      providerSignUp: async (provider, profileData) => {
+        try {
+          set({ isLoading: true, error: null });
+
+          let userCredential;
+          if (provider === "google") {
+            userCredential = await AuthService.googleSignIn();
+          } else if (provider === "apple") {
+            userCredential = await AuthService.appleSignIn();
+          }
+
+          profileData.name = profileData.name || userCredential.user.displayName || '';
+
+          // Create user profile in Firestore
+          await AuthService.createFirestoreUserProfile(userCredential, profileData);
+          get().setUser(userCredential.user);
           
-          set({ isLoading: false });
         } catch (error: any) {
           set({ isLoading: false, error: error.message });
           throw error;
@@ -159,6 +169,17 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
+      deleteAccount: async () => { 
+        try {
+          set({ isLoading: true, error: null });
+          await AuthService.deleteAccount();
+          get().setUser(null);
+        } catch (error: any) {
+          set({ isLoading: false, error: error.message });
+          throw error;
+        }
+      },
+
       initializeAuth: () => {
         const unsubscribe = AuthService.onAuthStateChanged((user) => {
           get().setUser(user);
@@ -168,6 +189,7 @@ export const useAuthStore = create<AuthState>()(
         return unsubscribe;
       },
     }),
+
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => AsyncStorage),

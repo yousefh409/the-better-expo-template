@@ -4,7 +4,7 @@ import React from 'react';
 import { Alert, View } from 'react-native';
 
 export default function ProfileScreen() {
-  const { user, signOut, isLoading } = useAuthStore();
+  const { user, signOut, isLoading, deleteAccount } = useAuthStore();
 
   const handleSignOut = async () => {
     Alert.alert(
@@ -29,6 +29,36 @@ export default function ProfileScreen() {
       ]
     );
   };
+
+  const handleDeleteAccount = async () => {
+    Alert.prompt(
+          'Delete Profile',
+          'This action is irreversible. Please type "delete" to confirm.',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+            },
+            {
+              text: 'Delete',
+              style: 'destructive',
+              onPress: async (text) => {
+            if (text?.toLowerCase() === 'delete') {
+              try {
+                await deleteAccount();
+                Alert.alert('Success', 'Your profile has been deleted.');
+              } catch (error: any) {
+                Alert.alert('Error', error.message || 'Failed to delete profile');
+              }
+            } else {
+              Alert.alert('Error', 'You must type "delete" to confirm.');
+            }
+              },
+            },
+          ],
+          'plain-text'
+    );
+  }
 
   return (
     <View className="flex-1 px-6 pt-16">
@@ -61,6 +91,16 @@ export default function ProfileScreen() {
       >
         Sign Out
       </Button>
+
+      {/* Delete Profile Section */}
+        <Button
+          className="mt-4"
+          variant="destructive"
+          onPress={handleDeleteAccount}
+          isLoading={isLoading}
+        >
+          Delete Profile
+        </Button>
     </View>
   );
 }

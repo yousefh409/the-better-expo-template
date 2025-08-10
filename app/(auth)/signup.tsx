@@ -1,6 +1,7 @@
-import { Button, Input } from '@/components/ui';
+import { Button, Input, Text } from '@/components/ui';
 import { useAuthStore } from '@/stores';
 import { useQuestionnaireStore } from '@/stores/questionnaireStore';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -10,7 +11,7 @@ import {
 } from 'react-native';
 
 export default function SignupScreen() {
-  const { signUp, isLoading, error, clearError } = useAuthStore();
+  const { signUp, isLoading, error, clearError, providerSignUp } = useAuthStore();
   const { answers: questionnaireData } = useQuestionnaireStore();
   
   const [email, setEmail] = useState('');
@@ -95,8 +96,30 @@ export default function SignupScreen() {
     }
   };
 
+  const handleSignUpProvider = async (provider: 'apple' | 'google') => {
+    Keyboard.dismiss();
+
+    try {
+      await providerSignUp(provider, { name, questionnaire: questionnaireData });
+      // Navigate to main app after successful signup
+      router.replace('/(tabs)');
+    } catch (error: any) {
+      // Error is already handled by the store and displayed via error state
+      // console.error('Signup failed:', error);
+    }
+  };
+
   return (
     <View>
+            <Text>hi</Text>
+      <AppleAuthentication.AppleAuthenticationButton
+        buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+        cornerRadius={5}
+        style={{ width: '100%', height: 44, marginBottom: 16 }}
+        onPress={() => {handleSignUpProvider('apple')}}
+      />
+      <Text>hi</Text>
       <View className="space-y-4">
         <Input
           label="Full Name"

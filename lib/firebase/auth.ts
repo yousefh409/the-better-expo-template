@@ -1,15 +1,19 @@
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { router } from 'expo-router';
 import {
   AuthError,
   createUserWithEmailAndPassword,
+  OAuthProvider,
   onAuthStateChanged,
+  signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
   User,
-  UserCredential,
+  UserCredential
 } from 'firebase/auth';
 import { auth } from './config';
+import FirestoreService from './firestore';
 
 // Custom error mapping for better user experience
 const getAuthErrorMessage = (errorCode: string): string => {
@@ -79,7 +83,8 @@ export class AuthService {
    * Sign out the current user
    */
   static async signOut(): Promise<void> {
-    return signOut(auth).finally(() => {router.replace('/(onboarding)/intro')});
+
+    await signOut(auth).finally(() => {router.replace('/(onboarding)/intro')});
   }
 
   /**
@@ -95,6 +100,63 @@ export class AuthService {
   static onAuthStateChanged(callback: (user: User | null) => void) {
     return onAuthStateChanged(auth, callback);
   }
+
+  /**
+   * Sign in with Aple
+   */
+  static async appleSignIn(): Promise<UserCredential> {
+      const idToken = await AppleAuthentication.signInAsync({
+          requestedScopes: [
+              AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+              AppleAuthentication.AppleAuthenticationScope.EMAIL
+          ]
+      })
+
+      if (!idToken.identityToken) {
+        throw new Error('Apple sign-in failed: No identity token received.');
+      }
+
+      const provider = new OAuthProvider('apple.com')
+      provider.addScope('email');
+      provider.addScope('name');
+      const credential = provider.credential({
+          idToken: idToken.identityToken
+      })
+
+      return await signInWithCredential(auth, credential)
+  }
+    
+  static async createFirestoreUserProfile(userCredential: UserCredential, profileData: any): Promise<void> {
+    if (!userCredential.user || !userCredential.user.uid || !userCredential.user.email) {
+      throw new Error('User not found');
+    }
+
+    await FirestoreService.createUserProfile(userCredential.user.uid, {
+        email: userCredential.user.email,
+        name: profileData.name,
+        displayName: profileData.name,
+        questionnaire: profileData.questionnaire || {},
+    });
+  }
+
+  /**
+   * Delete the user account
+   */
+  static async deleteAccount(): Promise<void> {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('No user is currently signed in.');
+    }
+    try {
+      await user.delete();
+      router.replace('/(onboarding)/intro');
+    } catch (error: any) {
+      const authError = error as AuthError;
+      throw new Error(getAuthErrorMessage(authError.code));
+    }
+  }
 }
+
+
 
 export default AuthService;

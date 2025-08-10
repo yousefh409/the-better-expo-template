@@ -1,5 +1,6 @@
 import { Button, Input } from '@/components/ui';
 import { useAuthStore } from '@/stores';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -13,7 +14,7 @@ interface LoginScreenProps {
 }
 
 export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
-  const { signIn, isLoading, error, clearError } = useAuthStore();
+  const { signIn, isLoading, error, clearError, providerSignIn} = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{email?: string; password?: string}>({});
@@ -75,6 +76,13 @@ export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
   };
   return (
         <View>
+          <AppleAuthentication.AppleAuthenticationButton
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+            cornerRadius={5}
+            onPress={() => {providerSignIn('apple');}}
+            style={{ width: '100%', height: 44, marginBottom: 16 }}
+          />
           <View className="space-y-4">
             <Input
               label="Email"

@@ -2,10 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-interface AppState {
-  // Theme
-  isDarkMode: boolean;
-  
+interface AppState {  
   // App settings
   isFirstLaunch: boolean;
   hasCompletedOnboarding: boolean;
@@ -14,7 +11,6 @@ interface AppState {
   isOffline: boolean;
   
   // Actions
-  toggleTheme: () => void;
   setFirstLaunch: (isFirst: boolean) => void;
   setOnboardingComplete: (complete: boolean) => void;
   setOfflineStatus: (offline: boolean) => void;
@@ -28,11 +24,6 @@ export const useAppStore = create<AppState>()(
       isFirstLaunch: true,
       hasCompletedOnboarding: false,
       isOffline: false,
-
-      // Actions
-      toggleTheme: () => {
-        set((state) => ({ isDarkMode: !state.isDarkMode }));
-      },
 
       setFirstLaunch: (isFirst) => {
         set({ isFirstLaunch: isFirst });
