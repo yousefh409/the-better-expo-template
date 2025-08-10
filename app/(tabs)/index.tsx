@@ -7,7 +7,7 @@ export default function HomeScreen() {
   const { user } = useAuthStore();
 
   return (
-    <View className="flex-1 px-6 pt-16">
+    <View className="flex-1 px-6 pt-20">
       <H1>
         Welcome Home!
       </H1>

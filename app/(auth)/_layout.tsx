@@ -25,7 +25,7 @@ export default function AuthStack() {
             >
               <View className="flex-1 justify-center px-6 py-12">
 
-                <View className="flex-1 justify-center px-6 py-12 space-y-4">
+                <View className="flex-1 justify-center px-6 py-12 mt-12 space-y-4">
                   {/* Header */}
                   <View className="mb-8">
                     <H1 className="text-3xl font-bold text-center mb-2">

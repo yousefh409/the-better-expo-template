@@ -76,13 +76,6 @@ export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
   };
   return (
         <View>
-          <AppleAuthentication.AppleAuthenticationButton
-            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-            cornerRadius={5}
-            onPress={() => {providerSignIn('apple');}}
-            style={{ width: '100%', height: 44, marginBottom: 16 }}
-          />
           <View className="space-y-4">
             <Input
               label="Email"
@@ -115,6 +108,15 @@ export default function LoginScreen({ onSwitchToSignup }: LoginScreenProps) {
             >
               Sign In
             </Button>
+
+            <AppleAuthentication.AppleAuthenticationButton
+                buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+                buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+                cornerRadius={5}
+                className="w-full h-[44px] mb-4"
+                style={{ width: '100%', height: 44, marginTop: 10 }}
+                onPress={() => {providerSignIn('apple')}}
+            />
           </View>
         </View>
   );

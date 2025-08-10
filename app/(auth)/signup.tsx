@@ -1,4 +1,4 @@
-import { Button, Input, Text } from '@/components/ui';
+import { Button, Input } from '@/components/ui';
 import { useAuthStore } from '@/stores';
 import { useQuestionnaireStore } from '@/stores/questionnaireStore';
 import * as AppleAuthentication from 'expo-apple-authentication';
@@ -111,15 +111,6 @@ export default function SignupScreen() {
 
   return (
     <View>
-            <Text>hi</Text>
-      <AppleAuthentication.AppleAuthenticationButton
-        buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-        cornerRadius={5}
-        style={{ width: '100%', height: 44, marginBottom: 16 }}
-        onPress={() => {handleSignUpProvider('apple')}}
-      />
-      <Text>hi</Text>
       <View className="space-y-4">
         <Input
           label="Full Name"
@@ -164,6 +155,16 @@ export default function SignupScreen() {
         >
           Create Account
         </Button>
+              {/* <H3 className='text-center mt-4 mb-4'>OR</H3> */}
+
+        <AppleAuthentication.AppleAuthenticationButton
+          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+          buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+          cornerRadius={5}
+          className="w-full h-[44px] mb-4"
+          style={{ width: '100%', height: 44, marginTop: 10 }}
+          onPress={() => {handleSignUpProvider('apple')}}
+        />
       </View>
     </View>
   );

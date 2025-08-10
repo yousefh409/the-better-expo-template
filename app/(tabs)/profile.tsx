@@ -61,7 +61,7 @@ export default function ProfileScreen() {
   }
 
   return (
-    <View className="flex-1 px-6 pt-16">
+    <View className="flex-1 px-6 pt-20">
       <H1>
         Profile
       </H1>
